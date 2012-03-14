@@ -59,4 +59,14 @@ describe Enumerize do
     user.role = 'wrong'
     user.wont_be :valid?
   end
+
+  it 'defines @_enumerized_values_for_validation instance variable' do
+    user = model.new
+    user.instance_variable_get("@_enumerized_values_for_validation").wont_be_nil
+
+    # Mongoid uses instantiate to create instance on query. e.g. find
+    user = model.instantiate
+    user.instance_variable_get("@_enumerized_values_for_validation").wont_be_nil
+  end
+
 end
